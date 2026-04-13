@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Form Biodata</title>
+  <title>Form Data</title>
+  <meta charset="UTF-8">
 </head>
 <body>
 
-<h2>Isi Data</h2>
+<h2>Form Input Data</h2>
 
-<form action="/submit" method="POST">
-    <input type="text" name="nama" placeholder="Nama"><br><br>
-    <input type="text" name="alamat" placeholder="Alamat"><br><br>
-    <button type="submit">Kirim</button>
+<form id="form">
+  <label>Nama:</label><br>
+  <input type="text" name="nama" required><br><br>
+
+  <label>Alamat:</label><br>
+  <input type="text" name="alamat" required><br><br>
+
+  <button type="submit">Kirim</button>
 </form>
+
+<script>
+const scriptURL = "https://docs.google.com/spreadsheets/d/1M9XNhBxP_ZQsSVYwsRFs73AxrNGuwXr_ZjxvcvUrKuE/edit?pli=1&gid=0#gid=0";
+const form = document.getElementById("form");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify({
+      nama: form.nama.value,
+      alamat: form.alamat.value
+    })
+  })
+  .then(response => {
+    alert("Data berhasil dikirim!");
+    form.reset();
+  })
+  .catch(error => {
+    alert("Terjadi error!");
+  });
+});
+</script>
 
 </body>
 </html>
